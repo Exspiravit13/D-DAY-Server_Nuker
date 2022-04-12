@@ -1,0 +1,6 @@
+{
+    "Token": "Bot Token Here",
+    "prefix": "!!",
+    "userID": "User ID here",
+    "disableEveryone": false
+}
