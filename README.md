@@ -3,7 +3,7 @@
 | D-DAY |
 | ------------- |
 | ![](https://cdn.discordapp.com/attachments/956618740093550713/962216926245961777/unknown.png)
-![](https://img.shields.io/github/stars/Exspiravit13/D-DAY_Server_Nuker?style=social) ![](https://img.shields.io/github/forks/Exspiravit13/D-DAY_Server_Nuker?style=social)
+![](https://img.shields.io/github/stars/Exspiravit13/D-DAY-Server_Nuker?style=social) ![](https://img.shields.io/github/forks/Exspiravit13/D-DAY-Server_Nuker?style=social)
 
 ## Features:
 1. `Ban All`
