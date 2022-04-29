@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Exspiravit13/D-DAY_Server_Nuker.git"
+    "url": "git+https://github.com/Exspiravit13/D-DAY-Server_Nuker.git"
   },
   "author": "Exspiravit",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Exspiravit13/D-DAY_Server_Nuker/issues"
+    "url": "https://github.com/Exspiravit13/D-DAY-Server_Nuker/issues"
   },
-  "homepage": "https://github.com/Exspiravit13/D-DAY_Server_Nuker#readme",
+  "homepage": "https://github.com/Exspiravit13/D-DAY-Server_Nuker#readme",
   "dependencies": {
     "chalk": "^4.1.2",
     "discord.js": "^13.6.0",
