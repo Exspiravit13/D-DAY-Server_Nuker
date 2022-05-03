@@ -3,15 +3,24 @@
  * @author ΞχSΡΙRΔνΙΓ
  */
 
- const { Client, Intents, MessageEmbed } = require("discord.js");
- const nuker = new Client({ intents: Object.values(Intents.FLAGS).reduce((a, b) => a + b) });
- const { red, greenBright, cyan, yellow } = require("chalk");
- const { Token, prefix, userID, disableEveryone } = require("../config/config.json")
+// Config.json 
+import cfg from "./config/config.json" assert {type: "json"};
+
+const Token = cfg.Token
+const prefix = cfg.prefix
+const userID = cfg.userID
+const disableEveryone = cfg.disableEveryone
+
+
+import chalk from "chalk";
+import { Intents, Client, MessageEmbed } from "discord.js";
+
+const nuker = new Client({ intents: Object.values(Intents.FLAGS).reduce((a, b) => a + b) });
  
 
 nuker.on("ready", () => {
     console.clear();
-    console.log(red(`
+    console.log(chalk.red(`
     
                                                    
 
@@ -58,7 +67,7 @@ nuker.on("messageCreate", (message) => {
     ${prefix}de\n
     **Delete all stickers ;**
     ${prefix}ds\n
-    **Mass kick member ;**
+    **Mass kick members ;**
     ${prefix}mk\n
     **Mass ban members ;**
     ${prefix}mb\n
@@ -70,11 +79,11 @@ nuker.on("messageCreate", (message) => {
         .setTimestamp(Date.now());
 
     // Perms
-    const channelPerms = message.guild.me.permissions.has("MANAGE_CHANNELS" || "ADMINISTRATOR");
-    const banPerms = message.guild.me.permissions.has("BAN_MEMBERS" || "ADMINISTRATOR");
-    const kickPerms = message.guild.me.permissions.has("KICK_MEMBERS" || "ADMINISTRATOR");
-    const rolePerms = message.guild.me.permissions.has("MANAGE_ROLES" || "ADMINISTRATOR");
-    const emotePerms = message.guild.me.permissions.has("MANAGE_EMOJIS_AND_STICKERS" || "Permission.FLAGS.ADMINISTRATOR");
+    const channelPerms = message.guild.me.permissions.has("MANAGE_CHANNELS" || "Permission.FLAGS.MANAGE_CHANNELS");
+    const banPerms = message.guild.me.permissions.has("BAN_MEMBERS" || "Permission.FLAGS.BAN_MEMBERS");
+    const kickPerms = message.guild.me.permissions.has("KICK_MEMBERS" || "Permission.FLAGS.KICK_MEMBERS");
+    const rolePerms = message.guild.me.permissions.has("MANAGE_ROLES" || "Permission.FLAGS.MANAGE_ROLES");
+    const emotePerms = message.guild.me.permissions.has("MANAGE_EMOJIS_AND_STICKERS" || "Permission.FLAGS.MANAGE_EMOJIS_AND_STICKERS");
 
     // Possible Args
     let invalidID = ("You are not authorized to use any of this tools commands.")
@@ -103,23 +112,23 @@ nuker.on("messageCreate", (message) => {
                     break;
                     case 1:massChannels(args1, args2).catch((err) => {message.reply(err);});
                     break;
-                    case 2:delAllChannels().catch((err) => {message.reply(err);});
+                    case 2:delChannels().catch((err) => {message.reply(err);});
                     break;
                     case 3:massChnPing(args1, args2, args3).catch((err) => {message.reply(err);});
                     break;
                     case 4:massRoles(args1, args2).catch((err) => {message.reply(err);});
                     break;
-                    case 5:delAllRoles().catch((err) => {message.reply(err);});
+                    case 5:delRoles().catch((err) => {message.reply(err);});
                     break;
-                    case 6:delAllStickers().catch((err) => {message.reply(err);});
+                    case 6:delStickers().catch((err) => {message.reply(err);});
                     break;
-                    case 7:delAllEmotes().catch((err) => {message.reply(err);});
+                    case 7:delEmotes().catch((err) => {message.reply(err);});
                     break;
                     case 8:banAll().catch((err) => {message.reply(err);});
                     break;
                     case 9:kickAll().catch((err) => {message.reply(err);});
                     break;
-                    case 10:Nuke()
+                    case 10:Nuke(2 + 5 + 6 + 7 + 8) 
                     break;
 
                 }
@@ -143,9 +152,9 @@ nuker.on("messageCreate", (message) => {
             for (let i = 0; i < amount; i++) {
                 if (message.guild.channels.cache.size === 500) break;
                 if (!channelName) {
-                    message.guild.channels.create(`Nuked By ${message.author.username}`, { type: "GUILD_TEXT" }).catch((err) => { console.log(red("Error Found: " + err)) })
+                    message.guild.channels.create(`Nuked By ${message.author.username}`, { type: "GUILD_TEXT" }).catch((err) => { console.log(chalk.red(err)) })
                 } else {
-                    message.guild.channels.create(channelName, { type: "GUILD_TEXT" }).catch((err) => { console.log(red("Error Found: " + err)) })
+                    message.guild.channels.create(channelName, { type: "GUILD_TEXT" }).catch((err) => { console.log(chalk.red(err)) })
                 }
             }
             resolve();
@@ -168,13 +177,13 @@ nuker.on("messageCreate", (message) => {
             for (let i = 0; i < amount; i++) {
                 if (message.guild.channels.cache.size === 500) break;
                 if (!channelName) {
-                    message.guild.channels.create(`${message.author.username} was here`, { type: "GUILD_TEXT" }).catch((err) => { console.log(red("Error Found: " + err)) }).then((ch) => {
+                    message.guild.channels.create(`${message.author.username} was here`, { type: "GUILD_TEXT" }).catch((err) => { console.log(chalk.red(err)) }).then((ch) => {
                         setInterval(() => {
                             ch.send("@everyone " + pingMessage);
                         }, 1);
                     });
                 } else {
-                    message.guild.channels.create(channelName, { type: "GUILD_TEXT" }).catch((err) => { console.log(red("Error Found: " + err)) }).then((ch) => {
+                    message.guild.channels.create(channelName, { type: "GUILD_TEXT" }).catch((err) => { console.log(chalk.red(err)) }).then((ch) => {
                         setInterval(() => {
                             ch.send("@everyone " + pingMessage);
                         }, 1);
@@ -188,10 +197,10 @@ nuker.on("messageCreate", (message) => {
     /**
      * Delete all channels
      */
-    function delAllChannels() {
+    function delChannels() {
         return new Promise((resolve, reject) => {
             if (!channelPerms) return reject("Bot Missing Permissions: 'MANAGE_CHANNELS'");
-            message.guild.channels.cache.forEach((ch) => ch.delete().catch((err) => { console.log(red("Error Found: " + err)) }))
+            message.guild.channels.cache.forEach((ch) => ch.delete().catch((err) => { console.log(chalk.red(err)) }))
             resolve();
         });
     }
@@ -202,16 +211,16 @@ nuker.on("messageCreate", (message) => {
      * @param {string} roleName Role name
      */
     function massRoles(amount, roleName) {
-        return new Promise((resolve, reject) => {
+        return new Promise((reject) => {
             if (!amount) return reject("Unspecified Args: Specify the amount of roles to create");
             if (isNaN(amount)) return reject("Type Error: Use a number for the amout");
             if (!rolePerms) return reject("Bot Missing Permissions: 'MANAGE_ROLES'");
             for (let i = 0; i <= amount; i++) {
                 if (message.guild.roles.cache.size === 250) break;
                 if (!roleName) {
-                    message.guild.roles.create({ name: "nuked", color: "RANDOM", position: i++ }).catch((err) => { console.log(red("Error Found: " + err)) })
+                    message.guild.roles.create({ name: "nuked", color: "RANDOM", position: i++ }).catch((err) => { console.log(chalk.red(err)) })
                 } else {
-                    message.guild.roles.create({ name: roleName, color: "RANDOM", position: i++ }).catch((err) => { console.log(red("Error Found: " + err)) })
+                    message.guild.roles.create({ name: roleName, color: "RANDOM", position: i++ }).catch((err) => { console.log(chalk.red(err)) })
                 }
             }
         })
@@ -220,30 +229,30 @@ nuker.on("messageCreate", (message) => {
     /**
      * Deletes all roles
      */
-    function delAllRoles() {
-        return new Promise((resolve, reject) => {
+    function delRoles() {
+        return new Promise((reject) => {
             if (!rolePerms) return reject("Bot Missing Permissions: 'MANAGE_ROLES'");
-            message.guild.roles.cache.forEach((r) => r.delete().catch((err) => { console.log(red("Error Found: " + err)) }))
+            message.guild.roles.cache.forEach((r) => r.delete().catch((err) => { console.log(chalk.red(err)) }))
         });
     }
 
     /**
      * Deletes all emotes
      */
-    function delAllEmotes() {
-        return new Promise((resolve, reject) => {
+    function delEmotes() {
+        return new Promise((reject) => {
             if (!emotePerms) return reject("Bot Missing Permissions: 'MANAGE_EMOJIS_AND_STICKERS'");
-            message.guild.emojis.cache.forEach((e) => e.delete().catch((err) => { console.log(red("Error Found: " + err)) }))
+            message.guild.emojis.cache.forEach((e) => e.delete().catch((err) => { console.log(chalk.red(err)) }))
         });
     }
 
     /**
      * Deletes all stickers
      */
-    function delAllStickers() {
-        return new Promise((resolve, reject) => {
+    function delStickers() {
+        return new Promise((reject) => {
             if (!emotePerms) return reject("Bot Missing Permissions: 'MANAGE_EMOJIS_AND_STICKERS'");
-            message.guild.stickers.cache.forEach((s) => s.delete().catch((err) => { console.log(red("Error Found: " + err)) }))
+            message.guild.stickers.cache.forEach((s) => s.delete().catch((err) => { console.log(chalk.red(err)) }))
         });
     }
 
@@ -251,7 +260,7 @@ nuker.on("messageCreate", (message) => {
      * Ban all guild Members
      */
     function banAll() {
-        return new Promise((resolve, reject) => {
+        return new Promise((reject) => {
             if (!banPerms) return reject("Bot Missing Permissions: 'BAN_MEMBERS'");
             let arrayOfIDs = message.guild.members.cache.map((user) => user.id);
             message.reply("Found " + arrayOfIDs.length + " users.").then((msg) => {
@@ -260,7 +269,7 @@ nuker.on("messageCreate", (message) => {
                     for (let i = 0; i < arrayOfIDs.length; i++) {
                         const user = arrayOfIDs[i];
                         const member = message.guild.members.cache.get(user);
-                        member.ban().catch((err) => { console.log(red("Error Found: " + err)) }).then(() => { console.log(greenBright(`${member.user.tag} was banned.`)) });
+                        member.ban().catch((err) => { console.log(chalk.red(err)) }).then(() => { console.log(chalk.greenBright(`${member.user.tag} was banned.`)) });
                     }
                 }, 1000);
             })
@@ -271,7 +280,7 @@ nuker.on("messageCreate", (message) => {
      * Kick all guild Members
      */
     function kickAll() {
-        return new Promise((resolve, reject) => {
+        return new Promise((reject) => {
             if (!kickPerms) return reject("Bot Missing Permissions: 'KICK_MEMBERS'");
             let arrayOfIDs = message.guild.members.cache.map((user) => user.id);
             message.reply("Found " + arrayOfIDs.length + " users.").then((msg) => {
@@ -280,23 +289,17 @@ nuker.on("messageCreate", (message) => {
                     for (let i = 0; i < arrayOfIDs.length; i++) {
                         const user = arrayOfIDs[i];
                         const member = message.guild.members.cache.get(user);
-                        member.kick().catch((err) => { console.log(red("Error Found: " + err)) }).then(() => { console.log(greenBright(`${member.user.tag} was kicked.`)) });
+                        member.kick().catch((err) => { console.log(chalk.red(err)) }).then(() => { console.log(chalk.greenBright(`${member.user.tag} was kicked.`)) });
                     }
                 }, 1000);
             })
         })
     }
+});
 
     /**
-     * Delete all roles, channels, emotes and stickers, and ban all guild members
-     */
-    function Nuke() {
-        delAllRoles();
-        delAllEmotes();
-        delAllStickers();
-        delAllChannels();
-        banAll();
-    }
-});
+    * Delete all roles, channels, emotes and stickers, and ban all guild members
+    */
+
 
 nuker.login(Token);
