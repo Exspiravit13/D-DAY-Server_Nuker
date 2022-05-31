@@ -52,28 +52,21 @@ nuker.on("messageCreate", (message) => {
 
     // Help Embed
     const help = new MessageEmbed()
-        .setDescription(`**D-DAY ;**
-    \n**Mass create channels ;**
-    ${prefix}mc [amount] (text) i.e \`${prefix}mc 13 test\`\n
-    **Mass create channels & ping everyone ;**
-    ${prefix}cp [amount] (text), {message} i.e \`${prefix}cp 13 test, testing\`\n
-    **Mass create roles ;**
-    ${prefix}mr [amount] (text) i.e \`${prefix}mr 13 test\`\n
-    **Delete all channels ;**
-    ${prefix}dc\n
-    **Delete all roles ;**
-    ${prefix}dr\n
-    **Delete all emotes ;**
-    ${prefix}de\n
-    **Delete all stickers ;**
-    ${prefix}ds\n
-    **Mass kick members ;**
-    ${prefix}mk\n
-    **Mass ban members ;**
-    ${prefix}mb\n
-    **Mass ban, delete roles, stickers, emotes, and channels ;**
-    ${prefix}nuke
-    `)
+    .setColor (`DARK_RED`)
+    .setTitle(`D-DAY Help`)
+    .setAuthor({name: `D-DAY`, iconURL: `https://cdn.discordapp.com/attachments/981200193846390844/981208320100663376/Screenshot_2022-05-31_075113.png` })
+    .setThumbnail(`https://cdn.discordapp.com/attachments/981200193846390844/981208320100663376/Screenshot_2022-05-31_075113.png`)
+    .addFields(       { name:`**Commands**`, value: `These are my commands` },
+    { name:`**Ban All**`, value: `${prefix}mb` },
+    { name:`**Kick All**`, value: `${prefix}mk` },
+    { name:`**Delete Channels**`, value: `${prefix}dc` },
+    { name:`**Delete Emotes**`, value: `${prefix}de` },
+    { name:`**Delete Roles**`, value: `${prefix}dr` },
+    { name:`**Delete Sticker**`, value: `${prefix}ds` },
+    { name:`**Mass Create Channels**`, value: `${prefix}mc \n **Example:** ${prefix}mc 100 Nuked!` },
+    { name:`**Mass Create Channels +ping **`, value: `${prefix}mc \n **Bot automatically spam pings everyone` },
+    { name:`**Mass Create Roles**`, value: `${prefix}mr \n **Example:** ${prefix}mr 100 Nuked!` }
+ )
         .setFooter(`© D-DAY`)
         .setColor(0x36393E)
         .setTimestamp(Date.now());
