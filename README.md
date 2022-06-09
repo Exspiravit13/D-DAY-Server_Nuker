@@ -19,5 +19,5 @@
 
 ## Contact Me
 [Website](https://www.exspiravitcodes.com)  
-[Discord](https://discord.com/users/858591750449135637)  
+[Discord](https://discord.com/users/978411947055796245)  
 [Discord Server](https://discord.gg/hnfZ9nwb3h)
